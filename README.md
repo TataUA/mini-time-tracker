@@ -71,6 +71,8 @@ Create .env in the backend folder (you can copy .env.example):
 
 This uses SQLite locally. The database file will be created automatically.
 
+Frontend requires `NEXT_PUBLIC_API_URL` (e.g. http://localhost:4000) defined in `.env.local`.
+
 4. Run Prisma migrations (backend only):
 
 ```bash
