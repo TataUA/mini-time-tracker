@@ -32,6 +32,18 @@ export const createTimeEntry = async (
       return res.status(400).json({ message: "Hours must be positive" });
     }
 
+    const totalHours = await prisma.timeEntry.aggregate({
+      _sum: { hours: true },
+      where: { date: new Date(date) },
+    });
+
+    const currentTotal = totalHours._sum.hours || 0;
+    if (currentTotal + hours > 24) {
+      return res
+        .status(400)
+        .json({ message: `Total hours for ${date} cannot exceed 24` });
+    }
+
     const entry: TimeEntryType = await prisma.timeEntry.create({
       data: {
         date: new Date(date),
